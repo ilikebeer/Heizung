@@ -1,0 +1,30 @@
+HEIZUNG-APP  (Android)
+======================
+
+Die App zeigt die Heizungsseite aus dem ioBroker im Vollbild an.
+Voreingestellt: http://192.168.178.56:8099  /  Benutzer admin  /  Passwort admin
+
+APK BAUEN (ueber GitHub, ohne Android Studio)
+1. Neues Repository auf GitHub anlegen (privat).
+2. Den ganzen Inhalt dieses Ordners hochladen (auch den versteckten Ordner .github und die Datei app/heizung.keystore).
+3. Reiter "Actions" -> "Heizung-App bauen" -> "Run workflow".
+4. Nach ca. 3 bis 5 Minuten den Lauf oeffnen, unten bei "Artifacts" Heizung-APK herunterladen und entpacken.
+   In der ZIP liegt app-release.apk.
+
+AUF DEM HANDY INSTALLIEREN
+1. app-release.apk aufs Handy bringen (WhatsApp, E-Mail, USB oder Teams).
+2. Antippen und installieren. Android fragt einmalig, ob die App "Unbekannte Apps installieren" darf: erlauben.
+3. Das Symbol "Heizung" (Flamme) liegt dann zwischen den anderen Apps.
+
+UPDATES
+Bei einer neuen Version die Datei einfach ueber die alte installieren. Der Schluessel ist fest
+(app/heizung.keystore), deshalb muss nichts deinstalliert werden. In app/build.gradle versionCode um 1 erhoehen.
+
+ADRESSE, BENUTZER, PASSWORT AENDERN (jederzeit)
+Ganz unten auf der Seite steht neben "Diagnose" der Link "App-Einstellungen" (wird von der App eingeblendet).
+Dort Adresse, Benutzer und Passwort eintragen und speichern. "Standard" setzt alles auf die Werte aus dem Code zurueck.
+Die Einstellungen bleiben nach dem Schliessen der App erhalten.
+Bei einem Verbindungsfehler gibt es im Fehlerbild ebenfalls die Taste "Adresse aendern".
+
+Standardwerte dauerhaft im Code aendern: app/src/main/java/de/heizung/steuerung/MainActivity.java
+(DEFAULT_URL, DEFAULT_USER, DEFAULT_PASS). Das Passwort muss zu HTTP_PASS im ioBroker-Script "Heizung_Visu" passen.
