@@ -30,7 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
- * Heizung - die App zeigt die Heizungs-Weboberflaeche aus dem ioBroker (Script "Heizung_Visu") im Vollbild an.
+ * Energie - die App zeigt die Energie-Weboberflaeche aus dem ioBroker (Script "Heizung_Visu") im Vollbild an.
  *
  * Standardwerte (Adresse, Benutzer, Passwort) stehen direkt unten. Sie lassen sich jederzeit in der App aendern:
  *  - ganz unten auf der Seite steht der Link "App-Einstellungen" (wird von der App eingeblendet)
@@ -41,9 +41,9 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
     // ---- Standardwerte (hier anpassen, wenn sich die Adresse aendert) ----
-    private static final String DEFAULT_URL  = "http://192.168.178.56:8099";
+    private static final String DEFAULT_URL  = "http://192.168.178.56:8100";
     private static final String DEFAULT_USER = "admin";
-    private static final String DEFAULT_PASS = "admin";
+    private static final String DEFAULT_PASS = "1234";
 
     private static final String PREFS    = "heizung";
     private static final String KEY_URL  = "url";
@@ -183,7 +183,7 @@ public class MainActivity extends Activity {
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 if (request.isForMainFrame()) {
                     showError("Keine Verbindung",
-                            "Die Heizung ist gerade nicht erreichbar.\n\nBitte prüfen, ob das WLAN verbunden ist.\n\n(" + error.getDescription() + ")");
+                            "Der ioBroker ist gerade nicht erreichbar.\n\nBitte prüfen, ob das WLAN verbunden ist.\n\n(" + error.getDescription() + ")");
                 }
             }
 
@@ -194,7 +194,7 @@ public class MainActivity extends Activity {
                     if (code == 401) {
                         showError("Anmeldung abgelehnt", "Benutzer oder Passwort stimmen nicht.\nÜber „Adresse ändern“ kann beides angepasst werden.");
                     } else if (code == 503) {
-                        showError("Heizung antwortet nicht", "Der Server läuft, aber das Regelungs-Script ist nicht aktiv.\nBitte später erneut versuchen.");
+                        showError("Keine Antwort", "Der Server läuft, aber das Logik-Script ist nicht aktiv.\nBitte später erneut versuchen.");
                     } else {
                         showError("Fehler " + code, "Die Seite konnte nicht geladen werden.");
                     }
@@ -288,7 +288,7 @@ public class MainActivity extends Activity {
                 + "a.id='app-settings-link';a.href='#';a.textContent='App-Einstellungen';"
                 + "a.style.cssText='color:#ffb347;font-weight:600;margin-left:8px';"
                 + "a.onclick=function(e){e.preventDefault();HeizungApp.openSettings();return false;};"
-                + "f.appendChild(document.createTextNode(' \u00b7 '));f.appendChild(a);"
+                + "f.appendChild(document.createTextNode(' \\u00b7 '));f.appendChild(a);"
                 + "})();";
         web.evaluateJavascript(js, null);
     }
@@ -310,7 +310,7 @@ public class MainActivity extends Activity {
         box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(dp(22), dp(10), dp(22), 0);
 
-        final EditText url = field("Adresse, z. B. http://192.168.178.56:8099", currentUrl(), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
+        final EditText url = field("Adresse, z. B. http://192.168.178.56:8100", currentUrl(), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
         final EditText user = field("Benutzer", prefs.getString(KEY_USER, DEFAULT_USER), InputType.TYPE_CLASS_TEXT);
         final EditText pass = field("Passwort", prefs.getString(KEY_PASS, DEFAULT_PASS), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         box.addView(url);
@@ -318,7 +318,7 @@ public class MainActivity extends Activity {
         box.addView(pass);
 
         new AlertDialog.Builder(this)
-                .setTitle("Heizung verbinden")
+                .setTitle("Energie verbinden")
                 .setView(box)
                 .setPositiveButton("Speichern", (d, w) -> {
                     String u = url.getText().toString().trim();
