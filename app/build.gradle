@@ -7,11 +7,12 @@ android {
     compileSdk 34
 
     defaultConfig {
+        // Paketname bleibt gleich, damit sich die neue Version ueber die alte installieren laesst
         applicationId "de.heizung.steuerung"
         minSdk 24
         targetSdk 34
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "2.0"
     }
 
     // Fester Schluessel: Updates lassen sich dadurch ueber die alte App installieren, ohne zu deinstallieren
